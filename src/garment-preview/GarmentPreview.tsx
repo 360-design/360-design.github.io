@@ -65,7 +65,6 @@ function PreviewSession({
   const drag = useRef<Drag | null>(null);
   const moved = useRef(false);
   const [zoom, setZoom] = useState<Zoom>({ kind: "fit" });
-  const [dragging, setDragging] = useState(false);
   const zoomed = zoom.kind === "zoom";
 
   function resetInspection() {
@@ -74,7 +73,6 @@ function PreviewSession({
     if (active?.target.hasPointerCapture(active.id))
       active.target.releasePointerCapture(active.id);
     moved.current = false;
-    setDragging(false);
     setZoom({ kind: "fit" });
   }
 
@@ -146,7 +144,6 @@ function PreviewSession({
     };
     if (zoomed) {
       event.currentTarget.setPointerCapture(event.pointerId);
-      setDragging(true);
     }
   }
 
@@ -279,21 +276,18 @@ function PreviewSession({
                   onPointerMove={pointerMove}
                   onPointerUp={() => {
                     drag.current = null;
-                    setDragging(false);
                   }}
                   onPointerCancel={() => {
                     drag.current = null;
                     moved.current = true;
-                    setDragging(false);
                   }}
                   onLostPointerCapture={() => {
                     drag.current = null;
-                    setDragging(false);
                   }}
                   onDragStart={(event) => event.preventDefault()}
                   onKeyDown={keyboard}
                   onClick={(event) => {
-                    if (moved.current) return;
+                    if (moved.current && event.detail !== 0) return;
                     const rect = event.currentTarget.getBoundingClientRect();
                     toggleZoom(
                       event.currentTarget,
@@ -308,7 +302,6 @@ function PreviewSession({
                 >
                   <div
                     className="gallery-zoom-layer"
-                    data-dragging={dragging}
                     style={{
                       transform:
                         side === view && zoomed

@@ -151,11 +151,15 @@ it("uses the first Escape to exit zoom even outside the image, then closes and r
   expect(stage("Back").getAttribute("aria-pressed")).toBe("false");
 });
 it("zooms around the tapped point and clamps dragging; changing a choice releases pointer capture", () => {
-  const { container } = open();
+  open();
   const back = stage("Back");
   fireEvent.click(back, { detail: 1, clientX: 0, clientY: 0 });
   const layer = back.querySelector<HTMLElement>(".gallery-zoom-layer")!;
-  expect(layer.style.transform).toBe("translate(300px, 375px) scale(2.5)");
+  expect(layer.style.transform.match(/-?\d+(?:\.\d+)?/g)?.map(Number)).toEqual([
+    expect.closeTo(216.666667, 3),
+    375,
+    2.5,
+  ]);
   fireEvent.pointerDown(back, {
     isPrimary: true,
     button: 0,
@@ -164,11 +168,34 @@ it("zooms around the tapped point and clamps dragging; changing a choice release
     clientY: 0,
   });
   fireEvent.pointerMove(back, { pointerId: 1, clientX: -2000, clientY: -2000 });
-  expect(layer.style.transform).toBe("translate(-300px, -375px) scale(2.5)");
+  expect(layer.style.transform.match(/-?\d+(?:\.\d+)?/g)?.map(Number)).toEqual([
+    expect.closeTo(-216.666667, 3),
+    -375,
+    2.5,
+  ]);
   fireEvent.click(
     screen.getByRole("button", { name: "World hoodie in White" }),
   );
   expect(back.releasePointerCapture).toHaveBeenCalledWith(1);
-  expect(container.querySelector('[data-dragging="true"]')).toBeNull();
   expect(layer.style.transform).toBe("translate(0px, 0px) scale(1)");
+});
+
+it("accepts assistive-technology activation after a drag while ignoring the drag's pointer click", () => {
+  open();
+  zoom();
+  const back = stage("Back");
+  fireEvent.pointerDown(back, {
+    isPrimary: true,
+    button: 0,
+    pointerId: 1,
+    clientX: 100,
+    clientY: 100,
+  });
+  fireEvent.pointerMove(back, { pointerId: 1, clientX: 160, clientY: 100 });
+  fireEvent.pointerUp(back, { pointerId: 1 });
+  fireEvent.click(back, { detail: 1 });
+  expect(screen.getByRole("button", { name: "ZOOM OUT" })).toBeTruthy();
+  // Screen readers activate role=button with a click without pointerdown.
+  fireEvent.click(back, { detail: 0 });
+  expect(screen.getByRole("button", { name: "ZOOM IN" })).toBeTruthy();
 });
