@@ -20,6 +20,7 @@ export default function App() {
       </a>
       <main id="main">
         <Hero mode={appearance.mode} onModeChange={changeMode} />
+        <Lookbook selections={appearance.selections} />
         <Collection
           selections={appearance.selections}
           onSelectionChange={(id, update) =>
@@ -31,12 +32,9 @@ export default function App() {
           id="story"
           aria-labelledby="story-title"
         >
-          <div className="story-art" data-reveal="image">
-            <CircleSign />
-          </div>
           <div className="story-copy">
             <p className="mono eyebrow" data-reveal="text">
-              02 / THE IDEA
+              03 / THE IDEA
             </p>
             <h2 id="story-title" data-reveal="text" data-reveal-order="1">
               A passing moment.
@@ -60,8 +58,10 @@ export default function App() {
               That's 360. One circle. Whatever comes next.
             </p>
           </div>
+          <div className="story-art" data-reveal="image">
+            <CircleSign />
+          </div>
         </section>
-        <Lookbook selections={appearance.selections} />
         <Signup />
       </main>
       <footer className="site-footer">

@@ -1,4 +1,9 @@
-import type { Colorway, DesignId, GarmentSelection } from "./collection.ts";
+import {
+  designs,
+  type Colorway,
+  type DesignId,
+  type GarmentSelection,
+} from "./collection.ts";
 
 export type Appearance = {
   mode: Colorway;
@@ -16,6 +21,8 @@ export function createAppearance(mode: Colorway): Appearance {
       "02": { color: mode, mark: "circle" },
       "03": { color: mode, mark: "circle" },
       "04": { color: mode, mark: "circle" },
+      "05": { color: mode, mark: "circle" },
+      "06": { color: mode, mark: "circle" },
     },
   };
 }
@@ -27,7 +34,7 @@ export function appearanceReducer(
   switch (action.type) {
     case "mode": {
       const selections = { ...state.selections };
-      for (const id of ["01", "02", "03", "04"] as const) {
+      for (const { id } of designs) {
         selections[id] = { ...selections[id], color: action.mode };
       }
       return { mode: action.mode, selections };

@@ -9,17 +9,16 @@ import CircleArtwork from "./CircleArtwork";
 import "./lookbook.css";
 import ColorwayPhoto from "../photography/ColorwayPhoto";
 
-const looks: Record<
-  DesignId,
-  {
-    image: string;
-    side: "Front" | "Back";
-    x: number;
-    y: number;
-    width: number;
-    height: number;
-  }
-> = {
+type Look = {
+  image: string;
+  side: "Front" | "Back";
+  x: number;
+  y: number;
+  width: number;
+  height: number;
+};
+
+const looks: Partial<Record<DesignId, Look>> = {
   "01": {
     image: "world-front",
     side: "Front",
@@ -56,11 +55,12 @@ const looks: Record<
 function LookbookPhoto({
   design,
   selection,
+  look,
 }: {
   design: Design;
   selection: GarmentSelection;
+  look: Look;
 }) {
-  const look = looks[design.id];
   const artwork = look.side === "Front" ? selection.mark : design.artwork;
   const source = (color: string) => ({
     src: `/images/lookbook/${look.image}-${color}.webp`,
@@ -115,7 +115,7 @@ export default function Lookbook({
       <div className="lookbook-heading">
         <div>
           <p className="mono eyebrow" data-reveal="text">
-            03 / THE LOOKBOOK
+            01 / THE LOOKBOOK
           </p>
           <h2 id="lookbook-title" data-reveal="text" data-reveal-order="1">
             One shape.
@@ -129,25 +129,33 @@ export default function Lookbook({
         </p>
       </div>
       <div className="lookbook-grid">
-        {designs.map((design) => (
-          <figure
-            className="lookbook-look"
-            key={design.id}
-            data-look={design.id}
-            data-reveal="image"
-          >
-            <LookbookPhoto design={design} selection={selections[design.id]} />
-            <figcaption>
-              <div>
-                <span className="mono lookbook-number">{design.id}</span>
-                <span>{design.name}</span>
-              </div>
-              <span className="mono lookbook-detail">
-                {design.type} / {looks[design.id].side}
-              </span>
-            </figcaption>
-          </figure>
-        ))}
+        {designs.map((design) => {
+          const look = looks[design.id];
+          if (!look) return null;
+          return (
+            <figure
+              className="lookbook-look"
+              key={design.id}
+              data-look={design.id}
+              data-reveal="image"
+            >
+              <LookbookPhoto
+                design={design}
+                selection={selections[design.id]}
+                look={look}
+              />
+              <figcaption>
+                <div>
+                  <span className="mono lookbook-number">{design.id}</span>
+                  <span>{design.name}</span>
+                </div>
+                <span className="mono lookbook-detail">
+                  {design.type} / {look.side}
+                </span>
+              </figcaption>
+            </figure>
+          );
+        })}
       </div>
     </section>
   );

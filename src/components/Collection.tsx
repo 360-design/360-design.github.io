@@ -75,7 +75,7 @@ export default function Collection({
       aria-labelledby="collection-title"
     >
       <div className="section-topline mono" data-reveal="text">
-        <span>01 / THE FIRST COLLECTION</span>
+        <span>02 / THE FIRST COLLECTION</span>
       </div>
       <div className="collection-heading">
         <h2 id="collection-title" data-reveal="text">

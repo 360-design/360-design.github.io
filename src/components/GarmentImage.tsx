@@ -107,6 +107,10 @@ export default memo(function GarmentImage({
               CHANGE
             </text>
           </>
+        ) : design.artwork === "360" ? (
+          <g transform="translate(617 440) rotate(90)">
+            <CircleArtwork artwork="360" width={510} height={210} />
+          </g>
         ) : (
           <CircleArtwork
             artwork={design.artwork}

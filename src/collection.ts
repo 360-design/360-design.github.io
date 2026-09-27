@@ -1,14 +1,14 @@
 export type Colorway = "Black" | "White";
 export type ChestMark = "circle" | "360";
 export type GarmentView = "Back" | "Front";
-export type DesignId = "01" | "02" | "03" | "04";
+export type DesignId = "01" | "02" | "03" | "04" | "05" | "06";
 export type GarmentSelection = { color: Colorway; mark: ChestMark };
 export type Design = {
   id: DesignId;
   name: string;
   type: string;
   garment: "hoodie" | "tee";
-  artwork: "world" | "time" | "smiley" | "butterfly";
+  artwork: "world" | "time" | "smiley" | "butterfly" | "circle" | "360";
   description: string;
 };
 
@@ -48,5 +48,23 @@ export const designs: Design[] = [
     artwork: "butterfly",
     description:
       "Small circles come together as a butterfly. An open invitation to grow, change, and begin again.",
+  },
+  {
+    id: "05",
+    name: "Full circle",
+    type: "Circle tee",
+    garment: "tee",
+    artwork: "circle",
+    description:
+      "The 360 circle, drawn in small rings and printed large on the back. Choose a circle or 360 mark for the front.",
+  },
+  {
+    id: "06",
+    name: "A new angle",
+    type: "90° tee",
+    garment: "tee",
+    artwork: "360",
+    description:
+      "Our circle-built 360, turned 90 degrees clockwise down the back. 3 at the top, 0 at the bottom. Your choice of mark on the front.",
   },
 ];

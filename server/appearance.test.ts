@@ -1,6 +1,7 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { appearanceReducer, createAppearance } from "../src/appearance.ts";
+import { designs } from "../src/collection.ts";
 
 test("a saved page mode initializes every garment in its matching colour", () => {
   for (const mode of ["Black", "White"] as const) {
@@ -8,7 +9,7 @@ test("a saved page mode initializes every garment in its matching colour", () =>
     assert.equal(state.mode, mode);
     assert.deepEqual(
       Object.values(state.selections).map((s) => s.color),
-      Array(4).fill(mode),
+      Array(designs.length).fill(mode),
     );
   }
 });

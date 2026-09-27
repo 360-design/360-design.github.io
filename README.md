@@ -11,7 +11,7 @@ The development server runs at http://100.92.57.21:8000 on this machine's Tailsc
 
 ## Content
 
-- `src/collection.ts` contains the four early garment concepts.
+- `src/collection.ts` contains six early garment concepts, including the Full circle tee and the A new angle tee. The latter rotates the 360 back print 90° clockwise, with 3 at the top and 0 at the bottom. Both offer black/white colourways and either front chest mark.
 - `src/components/CircleMark.tsx` draws the circle-grid identity.
 - `src/components/CircleSign.tsx` displays a non-interactive light sign in the story section. It cycles through all six designs every four seconds, pauses in hidden tabs, and stays still with reduced motion. `src/sign-artwork.ts` places complete artwork on a fixed grid without downsampling.
 - `src/components/Hero.tsx` coordinates the opening light sequence and the photo's first visible reveal. Its animation timing is in `src/styles.css`.
@@ -29,7 +29,7 @@ This is a brand launch preview. There is no checkout, stock, or pricing. All gar
 
 ## Lookbook
 
-`src/components/Lookbook.tsx` adds four model photographs after the story, with a front view of the World hoodie and rear views of the Time tee, Smiley tee and Butterfly hoodie. The photos follow the collection's individual colour and chest-mark selections, including page-wide mode changes. `lookbook.css` uses a staggered two-column layout on desktop and a single column below 768px. Existing scroll reveals apply to each complete photograph and caption.
+`src/components/Lookbook.tsx` adds four model photographs before the collection, with a front view of the World hoodie and rear views of the Time tee, Smiley tee and Butterfly hoodie. The photos follow the collection's individual colour and chest-mark selections, including page-wide mode changes. `lookbook.css` uses a staggered two-column layout on desktop and a single column below 768px. Existing scroll reveals apply to each complete photograph and caption.
 
 The eight blank photos were created with the built-in image-generation tool. PNG originals live in `design-ideas/lookbook/`, exact prompts in `docs/lookbook-image-prompts.json`, and optimized WebP copies in `public/images/lookbook/` (approximately 685KB combined). Every print uses the existing native SVG circle grids, positioned in the photograph's 1024×1536 coordinate system. Images load lazily; each colour's photo and print fade as one layer after decoding, preserving the available layer while its replacement loads. Reduced motion removes the fade.
 

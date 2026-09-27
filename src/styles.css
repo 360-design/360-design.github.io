@@ -943,7 +943,6 @@ body:has(dialog[open]) {
   }
   .story-art {
     min-height: 340px;
-    order: 2;
   }
 
   .story-copy {
