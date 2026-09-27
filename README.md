@@ -47,7 +47,9 @@ The large PNG design archives, historical references and generation prompt recor
 
 ## GitHub Pages
 
-The `origin` remote is `https://github.com/360-design/360-design.github.io.git`. The prepared `.github/workflows/pages.yml` installs locked dependencies, checks formatting, runs tests, builds and deploys `dist` to GitHub Pages. The workflow uses Node 26 and scoped deployment permissions. It only runs when the repository variable `SIGNUP_READY` is `true`; leave it unset until the Formspree endpoint has been verified. Store the public endpoint in the `FORMSPREE_ENDPOINT` repository variable. The workflow passes it as `VITE_FORMSPREE_ENDPOINT` and runs `npm run build:pages`, which rejects missing or invalid signup configuration.
+Live at [360-design.github.io](https://360-design.github.io/). The initial deployment and all 17 checks passed on 2026-09-27.
+
+The `origin` remote is `https://github.com/360-design/360-design.github.io.git`. The `.github/workflows/pages.yml` installs locked dependencies, checks formatting, runs tests, builds and deploys `dist` to GitHub Pages. The workflow uses Node 26 and scoped deployment permissions. It only runs when the repository variable `SIGNUP_READY` is `true`; leave it unset until the Formspree endpoint has been verified. Store the public endpoint in the `FORMSPREE_ENDPOINT` repository variable. The workflow passes it as `VITE_FORMSPREE_ENDPOINT` and runs `npm run build:pages`, which rejects missing or invalid signup configuration.
 
 GitHub Pages cannot run the local signup API. The user selected Formspree and requires a working hosted form before publication. The verified form endpoint is `https://formspree.io/f/mqpayvwr`, configured in the repository variable `FORMSPREE_ENDPOINT`. `SIGNUP_READY` is enabled after a successful verification submission. The local Tailscale form and SQLite storage continue working. Keep the email form in the public site, and do not substitute a coming-soon signup notice.
 
