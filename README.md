@@ -18,7 +18,7 @@ The development server runs at http://100.92.57.21:8000 on this machine's Tailsc
 - `src/useScrollReveals.ts` observes the page's `data-reveal` elements. `src/scroll-reveals.css` defines their entrances and responsive stagger timing.
 - `src/styles.css` contains the responsive design, typography, and Black/White palette tokens. `ModeSwitch.tsx` renders the circle-built light bulb beside the hero action; `src/appearance.ts` coordinates the palette with garment colourways while preserving chest marks. `src/useAppearance.ts` saves the page mode as `360-mode` in localStorage, and the small head script applies it before painting. Individual garment overrides remain session-only.
 - `public/images/garment-blanks/` contains eight clean 1024×1536 garment photographs (black/white, tee/hoodie, front/back). `src/artwork.ts` defines six precise circle grids; `CircleArtwork.tsx` renders the vector prints over the photos. All main artwork stays on the back. The front offers the story-style ring of circles or the 360 mark on the wearer's left chest.
-- `src/components/GarmentGallery.tsx` provides native front/back swiping, 2.5× zoom, bounded pointer panning, and keyboard controls. `src/gallery-geometry.ts` owns tested pan limits and zoom positioning.
+- `src/garment-preview/GarmentPreview.tsx` owns the complete preview session: dialog focus, front/back swiping, 2.5× zoom, bounded panning, keyboard controls, and resets when choices change. The collection supplies the selected design and persistent garment choices; it does not coordinate inspection state. Geometry and details stay internal to this module.
 - `src/components/GarmentImage.tsx` selects the image for each garment, colour, side, and chest mark. Choices are remembered separately for each garment during the current page session.
 - `design-ideas/product-images/` archives the first generated concepts, including the old printed artwork. The current blank PNG originals are in `design-ideas/garment-blanks/`, with exact built-in image-tool prompts in `docs/clean-garment-prompts.json`. ImageMagick encodes their WebP copies. The printed graphics are native SVG circles, never generated pixels. The original generation prompts remain in `docs/product-image-prompts.json`.
 - `design-ideas/references/collection.png` is retained as the original design reference and is no longer used for product images.
@@ -71,4 +71,12 @@ npm run --silent waitlist:export > ~/360-waitlist.csv
 
 The database is created on the first successful signup. The export command requires it to exist. There is no public subscriber-list endpoint. The API validates input, limits request size, rejects cross-origin browser submissions, and limits each connection address to 10 attempts per minute. This is a local preview backend; deploying `dist/` alone does not include it. A public deployment needs a hosted signup API or mailing-list integration.
 
-Run `npm test` for real HTTP and SQLite integration checks, `npm run build` for type checking and bundling, and `npm run format:check` for formatting.
+Run `npm test` for real HTTP and SQLite integration checks plus mounted React interaction tests (Vitest and jsdom), `npm run build` for type checking and bundling, and `npm run format:check` for formatting.
+
+## Module contracts
+
+- `src/photography/ColorwayPhoto.tsx` owns decoded photo readiness, fallback colour, errors, accessible descriptions and the matching print layer. Campaign and lookbook callers provide sources, crop and artwork placement. A failed requested colour retains a usable fallback; both failures show an unavailable message. The hero starts only after a usable photo or a final failure.
+- `src/signup/SignupForm.tsx` is the signup interface. Its internal delivery module selects native Formspree POST or local JSON submission from the validated endpoint. Hosted delivery stays native for confirmation and CAPTCHA; local delivery handles pending, error, retry and success. `src/signup/consent.ts` supplies the form’s consent wording and the local database’s consent version.
+- `CONTEXT.md` defines the shared brand and garment terms.
+
+The interaction tests cover delayed and failed photo decoding, rapid colour changes, preview choice/zoom/swipe/focus sequences, pointer limits, and both signup paths. Hosted tests inspect the native form contract without sending a real Formspree submission. Local form tests use a temporary HTTP server and SQLite database, never the actual waitlist.

@@ -59,36 +59,9 @@
   overflow: hidden;
 }
 
-.lookbook-colorway,
-.lookbook-colorway img,
-.lookbook-print {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-
-.lookbook-colorway {
-  opacity: 0;
-  transition: opacity 180ms var(--ease-out);
-}
-
-.lookbook-colorway[data-visible="true"] {
-  opacity: 1;
-}
-
-.lookbook-print {
-  pointer-events: none;
-}
-
-.lookbook-unavailable {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
+.lookbook-photo > .colorway-unavailable {
   color: var(--ink);
   background: var(--surface);
-  font-size: 11px;
 }
 
 .lookbook-look figcaption {

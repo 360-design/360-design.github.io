@@ -8,8 +8,8 @@
     "build": "tsc -b && vite build",
     "build:pages": "tsc -b && vite build --mode pages",
     "preview": "vite preview --host 0.0.0.0",
-    "format:check": "prettier --check src server index.html vite.config.ts tsconfig.json package.json",
-    "test": "node --test server/*.test.ts",
+    "format:check": "prettier --check src server index.html vite.config.ts tsconfig.json package.json tests vitest.config.ts",
+    "test": "node --test server/*.test.ts && vitest run",
     "waitlist:export": "node server/export-waitlist.ts",
     "assets:generate": "python scripts/generate-launch-assets.py"
   },
@@ -21,12 +21,15 @@
     "react-dom": "^19.3.0"
   },
   "devDependencies": {
+    "@testing-library/react": "^16.3.3",
     "@types/node": "^26.6.3",
     "@types/react": "^19.3.0",
     "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^6.1.1",
+    "jsdom": "^30.1.1",
     "prettier": "^3.9.9",
     "typescript": "^7.0.2",
-    "vite": "^8.3.1"
+    "vite": "^8.3.1",
+    "vitest": "^5.0.2"
   }
 }

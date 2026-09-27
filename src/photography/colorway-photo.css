@@ -1,0 +1,27 @@
+.colorway-scene,
+.colorway-layer,
+.colorway-layer > img,
+.colorway-print {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+.colorway-layer {
+  opacity: 0;
+  transition: opacity 180ms var(--ease-out);
+}
+.colorway-layer[data-visible="true"] {
+  opacity: 1;
+}
+.colorway-print {
+  pointer-events: none;
+}
+.colorway-unavailable {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  place-items: center;
+  color: var(--muted);
+  font-size: 11px;
+}

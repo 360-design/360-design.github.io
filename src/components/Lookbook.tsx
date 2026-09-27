@@ -1,14 +1,13 @@
-import { useState } from "react";
 import type { Appearance } from "../appearance";
 import {
   designs,
-  type Colorway,
   type Design,
   type DesignId,
   type GarmentSelection,
 } from "../collection";
 import CircleArtwork from "./CircleArtwork";
 import "./lookbook.css";
+import ColorwayPhoto from "../photography/ColorwayPhoto";
 
 const looks: Record<
   DesignId,
@@ -54,8 +53,6 @@ const looks: Record<
     height: 290,
   },
 };
-const colors: Colorway[] = ["Black", "White"];
-
 function LookbookPhoto({
   design,
   selection,
@@ -63,92 +60,44 @@ function LookbookPhoto({
   design: Design;
   selection: GarmentSelection;
 }) {
-  const [ready, setReady] = useState({ Black: false, White: false });
-  const [failed, setFailed] = useState({ Black: false, White: false });
-  const other = selection.color === "Black" ? "White" : "Black";
-  const shown = ready[selection.color]
-    ? selection.color
-    : ready[other]
-      ? other
-      : null;
-  const unavailable = failed.Black && failed.White;
   const look = looks[design.id];
   const artwork = look.side === "Front" ? selection.mark : design.artwork;
-
-  async function loaded(image: HTMLImageElement, color: Colorway) {
-    try {
-      await image.decode();
-    } catch {
-      // A successful load still provides a usable image when decode is interrupted.
-    }
-    setReady((current) => ({ ...current, [color]: true }));
-  }
-
+  const source = (color: string) => ({
+    src: `/images/lookbook/${look.image}-${color}.webp`,
+    srcSet: `/images/lookbook/${look.image}-${color}-480.webp 480w, /images/lookbook/${look.image}-${color}-768.webp 768w, /images/lookbook/${look.image}-${color}.webp 1024w`,
+  });
   return (
-    <div
+    <ColorwayPhoto
+      mode={selection.color}
+      sources={{ Black: source("black"), White: source("white") }}
+      sizes="(max-width: 524px) calc(100vw - 44px), (max-width: 767px) 480px, (max-width: 1508px) 42vw, 574px"
       className="lookbook-photo"
-      role="img"
-      aria-label={
-        shown
-          ? `${look.side} view of a model wearing the ${shown.toLowerCase()} ${design.type}, with ${look.side === "Front" ? `${selection.mark} artwork on the wearer's left chest` : `${design.name} circle artwork on the back`}`
-          : `${design.type} photo ${unavailable ? "unavailable" : "loading"}`
+      label={`${design.type} photo`}
+      describe={(color) =>
+        `${look.side} view of a model wearing the ${color.toLowerCase()} ${design.type}, with ${look.side === "Front" ? `${selection.mark} artwork on the wearer's left chest` : `${design.name} circle artwork on the back`}`
       }
-      aria-busy={shown === null && !unavailable}
-      data-colorway={shown ?? "loading"}
     >
-      {colors.map((color) => (
-        <div
-          className="lookbook-colorway"
-          key={color}
-          data-visible={shown === color}
-          aria-hidden="true"
+      <CircleArtwork
+        artwork={artwork}
+        x={look.x}
+        y={look.y}
+        width={look.width}
+        height={look.height}
+      />
+      {design.artwork === "butterfly" && (
+        <text
+          x={527.5}
+          y={925}
+          textAnchor="middle"
+          fill="currentColor"
+          fontFamily="Arial, sans-serif"
+          fontSize={15}
+          letterSpacing={8}
         >
-          <img
-            src={`/images/lookbook/${look.image}-${color.toLowerCase()}.webp`}
-            srcSet={`/images/lookbook/${look.image}-${color.toLowerCase()}-480.webp 480w, /images/lookbook/${look.image}-${color.toLowerCase()}-768.webp 768w, /images/lookbook/${look.image}-${color.toLowerCase()}.webp 1024w`}
-            sizes="(max-width: 524px) calc(100vw - 44px), (max-width: 767px) 480px, (max-width: 1508px) 42vw, 574px"
-            alt=""
-            width={1024}
-            height={1536}
-            loading="lazy"
-            decoding="async"
-            onLoad={(event) => void loaded(event.currentTarget, color)}
-            onError={() =>
-              setFailed((current) => ({ ...current, [color]: true }))
-            }
-          />
-          <svg
-            className="lookbook-print"
-            viewBox="0 0 1024 1536"
-            style={{ color: color === "Black" ? "#eeede8" : "#191918" }}
-          >
-            <CircleArtwork
-              artwork={artwork}
-              x={look.x}
-              y={look.y}
-              width={look.width}
-              height={look.height}
-            />
-            {design.artwork === "butterfly" && (
-              <text
-                x={527.5}
-                y={925}
-                textAnchor="middle"
-                fill="currentColor"
-                fontFamily="Arial, sans-serif"
-                fontSize={15}
-                letterSpacing={8}
-              >
-                CHANGE
-              </text>
-            )}
-          </svg>
-        </div>
-      ))}
-      {unavailable && (
-        <span className="lookbook-unavailable mono">Photo unavailable</span>
+          CHANGE
+        </text>
       )}
-    </div>
+    </ColorwayPhoto>
   );
 }
 

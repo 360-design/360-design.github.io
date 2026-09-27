@@ -1,6 +1,6 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
-import { clampPan, zoomAt } from "../src/gallery-geometry.ts";
+import { clampPan, zoomAt } from "../src/garment-preview/geometry.ts";
 
 test("zoomed image cannot be dragged beyond its edges", () => {
   assert.deepEqual(clampPan(999, -999, 320, 480), { x: 240, y: -360 });

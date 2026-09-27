@@ -1,3 +1,4 @@
+import { launchConsent } from "../src/signup/consent.ts";
 import type { IncomingMessage, ServerResponse } from "node:http";
 import { mkdirSync, chmodSync } from "node:fs";
 import { dirname, join } from "node:path";
@@ -47,7 +48,7 @@ export function createWaitlistHandler({
       .prepare(
         "INSERT OR IGNORE INTO subscribers (email, created_at, consent_version) VALUES (?, ?, ?)",
       )
-      .run(email, new Date().toISOString(), "launch-updates-v1");
+      .run(email, new Date().toISOString(), launchConsent.version);
   }
 
   return {

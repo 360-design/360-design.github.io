@@ -14,31 +14,6 @@
   top: 20%;
   transform: translate(-50%, -20%);
 }
-.campaign-colorway,
-.campaign-colorway > img,
-.campaign-print {
-  position: absolute;
-  inset: 0;
-  width: 100%;
-  height: 100%;
-}
-.campaign-colorway {
-  opacity: 0;
-  transition: opacity 180ms var(--ease-out);
-}
-.campaign-colorway[data-visible="true"] {
-  opacity: 1;
-}
-.campaign-print {
-  pointer-events: none;
-}
-.campaign-unavailable {
-  position: absolute;
-  inset: 0;
-  display: grid;
-  place-items: center;
-  color: var(--muted);
-}
 @media (max-width: 767px) {
   .campaign-scene {
     left: 55%;
