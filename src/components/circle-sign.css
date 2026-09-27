@@ -1,0 +1,24 @@
+.circle-sign {
+  width: 100%;
+  padding: 32px;
+}
+.circle-sign > svg {
+  display: block;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 1;
+  margin-inline: auto;
+}
+.circle-sign-grid {
+  opacity: 0.12;
+}
+@media (prefers-reduced-motion: no-preference) {
+  .circle-sign-artwork {
+    animation: light-ignite 1000ms linear both;
+  }
+}
+@media (max-width: 767px) {
+  .circle-sign {
+    padding: 24px;
+  }
+}

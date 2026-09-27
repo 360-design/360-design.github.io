@@ -1,0 +1,7 @@
+# Campaign image
+
+Generated with the built-in image generation tool for this homepage. Saved at `design-ideas/references/campaign.png`. The supplied garment sheet was the design reference. This image is a campaign concept.
+
+## Prompt
+
+Create a photorealistic premium minimalist streetwear campaign photograph for the clothing brand 360. Reference image is garment design reference ONLY. One portrait image, 1024x1536. A young adult with short dark hair facing away from camera, wearing the black oversized hoodie from the TOP LEFT of the reference, with an accurate white tiny hollow-circle dot-matrix WORLD MAP printed centrally across the back, and very small spaced white words A BRIGHTER TOMORROW below it. Hood down, baggy black trousers, subject casually standing with hands near pockets looking toward right, back facing viewer, head near top 15% of image. Crop at mid-thigh. Industrial grey concrete wall backdrop, angled sunlight from upper left producing large architectural diagonal shadow across wall. Achromatic black and white photograph, soft film grain, exceptional cotton texture and realistic folds. Fashion editorial photography, restrained contemporary art direction, quiet confidence. Subject fills most of frame, composed slightly right of center with world map clearly visible. No text overlay, no borders, no collage, no website UI. Deliver just the standalone campaign photograph.

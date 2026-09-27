@@ -1,0 +1,10 @@
+node_modules/
+dist/
+*.tsbuildinfo
+.env*
+!.env.example
+design-ideas/*
+!design-ideas/launch/
+docs/*prompts.json
+*.sqlite
+*.sqlite-*

@@ -1,0 +1,59 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#111110" />
+    <script>
+      // Apply the saved palette before the page paints.
+      try {
+        if (localStorage.getItem("360-mode") === "White") {
+          document.documentElement.dataset.mode = "White";
+          document.querySelector('meta[name="theme-color"]').content =
+            "#eeede8";
+        }
+      } catch {}
+    </script>
+    <meta
+      name="description"
+      content="360. A clothing label built from a single circle. Discover the first collection of monochrome, circle-made essentials. Coming soon."
+    />
+    <title>360 — Everything starts with a circle.</title>
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content="360" />
+    <meta
+      property="og:title"
+      content="360 — Everything starts with a circle."
+    />
+    <meta
+      property="og:description"
+      content="Monochrome clothing, made of circles. Discover the first collection. Coming soon."
+    />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta
+      name="twitter:title"
+      content="360 — Everything starts with a circle."
+    />
+    <meta
+      name="twitter:description"
+      content="Monochrome clothing, made of circles. Discover the first collection. Coming soon."
+    />
+    <meta
+      name="twitter:image:alt"
+      content="The circle-built 360 logo and Everything starts with a circle. Coming soon."
+    />
+    <meta name="apple-mobile-web-app-title" content="360" />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      sizes="16x16 32x32 48x48"
+      href="/favicon.ico"
+    />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>
