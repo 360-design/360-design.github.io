@@ -64,7 +64,7 @@ function LookbookPhoto({
   const artwork = look.side === "Front" ? selection.mark : design.artwork;
   const source = (color: string) => ({
     src: `/images/lookbook/${look.image}-${color}.webp`,
-    srcSet: `/images/lookbook/${look.image}-${color}-480.webp 480w, /images/lookbook/${look.image}-${color}-576.webp 576w, /images/lookbook/${look.image}-${color}-768.webp 768w, /images/lookbook/${look.image}-${color}.webp 1024w`,
+    srcSet: `/images/lookbook/${look.image}-${color}-480.webp 480w, /images/lookbook/${look.image}-${color}-576.webp 576w, /images/lookbook/${look.image}-${color}-648.webp 648w, /images/lookbook/${look.image}-${color}-768.webp 768w, /images/lookbook/${look.image}-${color}.webp 1024w`,
   });
   return (
     <ColorwayPhoto

@@ -63,7 +63,7 @@ card += '</g>'
 (SOURCE / 'social-preview.svg').write_text(svg(1200, 630, card))
 render(SOURCE / 'social-preview.svg', PUBLIC / 'social-preview.png', '1200x630')
 
-for folder, widths in [('campaign', [640, 672, 832]), ('garment-blanks', [384, 640]), ('lookbook', [480, 576, 768])]:
+for folder, widths in [('campaign', [640, 672, 736, 832]), ('garment-blanks', [384, 640]), ('lookbook', [480, 576, 648, 768])]:
     originals = ROOT / 'design-ideas' / ('campaign-blanks' if folder == 'campaign' else folder)
     for source in originals.glob('*.png'):
         for width in widths:
