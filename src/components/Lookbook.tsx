@@ -64,13 +64,13 @@ function LookbookPhoto({
   const artwork = look.side === "Front" ? selection.mark : design.artwork;
   const source = (color: string) => ({
     src: `/images/lookbook/${look.image}-${color}.webp`,
-    srcSet: `/images/lookbook/${look.image}-${color}-480.webp 480w, /images/lookbook/${look.image}-${color}-768.webp 768w, /images/lookbook/${look.image}-${color}.webp 1024w`,
+    srcSet: `/images/lookbook/${look.image}-${color}-480.webp 480w, /images/lookbook/${look.image}-${color}-576.webp 576w, /images/lookbook/${look.image}-${color}-768.webp 768w, /images/lookbook/${look.image}-${color}.webp 1024w`,
   });
   return (
     <ColorwayPhoto
       mode={selection.color}
       sources={{ Black: source("black"), White: source("white") }}
-      sizes="(max-width: 524px) calc(100vw - 44px), (max-width: 767px) 480px, (max-width: 1508px) 42vw, 574px"
+      sizes="(max-width: 524px) calc(100vw - 44px), (max-width: 767px) 480px, min(41.769vw, 573.3px)"
       className="lookbook-photo"
       label={`${design.type} photo`}
       describe={(color) =>

@@ -7,12 +7,12 @@ const sources = {
   Black: {
     src: "/images/campaign/black.webp",
     srcSet:
-      "/images/campaign/black-640.webp 640w, /images/campaign/black.webp 1024w",
+      "/images/campaign/black-640.webp 640w, /images/campaign/black-672.webp 672w, /images/campaign/black-832.webp 832w, /images/campaign/black.webp 1024w",
   },
   White: {
     src: "/images/campaign/white.webp",
     srcSet:
-      "/images/campaign/white-640.webp 640w, /images/campaign/white.webp 1024w",
+      "/images/campaign/white-640.webp 640w, /images/campaign/white-672.webp 672w, /images/campaign/white-832.webp 832w, /images/campaign/white.webp 1024w",
   },
 };
 export default function CampaignPhoto({
