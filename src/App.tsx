@@ -73,21 +73,42 @@ export default function App() {
         >
           <CircleMark />
         </a>
-        <span className="mono" data-reveal="text" data-reveal-order="1">
-          © {new Date().getFullYear()} 360 STUDIO
-        </span>
-        <span
-          className="footer-motto mono"
+        <nav
+          className="footer-socials"
+          aria-label="Social media"
           data-reveal="text"
-          data-reveal-order="2"
+          data-reveal-order="1"
         >
-          EVERYTHING STARTS WITH A CIRCLE.
-        </span>
+          <a
+            href="https://www.youtube.com/@360-DESIGNS-BRAND"
+            aria-label="YouTube"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="footer-social-icon youtube" aria-hidden="true" />
+          </a>
+          <a
+            href="https://www.instagram.com/360designofficial"
+            aria-label="Instagram"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="footer-social-icon instagram" aria-hidden="true" />
+          </a>
+          <a
+            href="https://www.tiktok.com/@360.design0"
+            aria-label="TikTok"
+            target="_blank"
+            rel="noopener noreferrer"
+          >
+            <span className="footer-social-icon tiktok" aria-hidden="true" />
+          </a>
+        </nav>
         <a
           href="#top"
           className="back-top mono"
           data-reveal="text"
-          data-reveal-order="3"
+          data-reveal-order="2"
         >
           BACK TO TOP <ArrowUpRight size={16} />
         </a>

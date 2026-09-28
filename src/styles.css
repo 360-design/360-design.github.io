@@ -616,15 +616,43 @@ svg {
 .footer-brand svg {
   width: 100%;
 }
-.site-footer > .mono {
-  font-size: 8px;
+.footer-socials {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+.footer-socials a {
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
   color: var(--muted);
+}
+.footer-socials a:hover,
+.footer-socials a:focus-visible {
+  color: var(--ink);
+}
+.footer-social-icon {
+  width: 24px;
+  height: 24px;
+  background: currentColor;
+  mask: center / contain no-repeat;
+}
+.footer-social-icon.youtube {
+  mask-image: url("./assets/icons/youtube.svg");
+}
+.footer-social-icon.instagram {
+  mask-image: url("./assets/icons/instagram.svg");
+}
+.footer-social-icon.tiktok {
+  mask-image: url("./assets/icons/tiktok.svg");
 }
 .back-top {
   display: flex;
   gap: 13px;
   align-items: center;
   font-size: 8px;
+  color: var(--muted);
 }
 .product-dialog {
   padding: 0;
@@ -979,9 +1007,6 @@ body:has(dialog[open]) {
     flex-wrap: wrap;
     gap: 25px;
   }
-  .footer-motto {
-    display: none;
-  }
   .footer-brand {
     width: 57px;
   }
@@ -1081,8 +1106,8 @@ body:has(dialog[open]) {
   .site-footer {
     gap: 20px;
   }
-  .site-footer > .mono {
-    font-size: 7px;
+  .footer-socials {
+    gap: 0;
   }
   .back-top {
     font-size: 7px;
