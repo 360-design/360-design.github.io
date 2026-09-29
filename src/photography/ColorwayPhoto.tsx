@@ -103,7 +103,7 @@ function PhotoSession({
             <img
               {...sources[color]}
               sizes={sizes}
-              alt=""
+              alt={describe(color)}
               width={1024}
               height={1536}
               loading={priority ? "eager" : "lazy"}

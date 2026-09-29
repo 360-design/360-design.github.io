@@ -19,12 +19,9 @@ export default memo(function GarmentImage({
     view === "Back"
       ? `${design.name} circle artwork on the back`
       : `${selection.mark === "circle" ? "a ring made of small grid-aligned circles" : "a small circle-built 360 logo"} on the wearer's left chest`;
+  const description = `${selection.color} ${design.type}, ${view.toLowerCase()} view with ${detail}`;
   return (
-    <span
-      className="garment-image"
-      role="img"
-      aria-label={`${selection.color} ${design.type}, ${view.toLowerCase()} view with ${detail}`}
-    >
+    <span className="garment-image" role="img" aria-label={description}>
       <img
         className="garment-photo"
         src={`/images/garment-blanks/${filename}.webp`}
@@ -34,7 +31,8 @@ export default memo(function GarmentImage({
             : `/images/garment-blanks/${filename}-384.webp 384w, /images/garment-blanks/${filename}-640.webp 640w, /images/garment-blanks/${filename}.webp 1024w`
         }
         sizes={preview ? undefined : "(max-width: 767px) 50vw, 25vw"}
-        alt=""
+        alt={description}
+        aria-hidden="true"
         width={1024}
         height={1536}
         loading={preview ? "eager" : "lazy"}
