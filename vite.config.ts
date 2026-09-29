@@ -7,6 +7,7 @@ import {
 } from "vite";
 import react from "@vitejs/plugin-react";
 import { launchMetadata } from "./server/launch-metadata.ts";
+import { prerender } from "./server/prerender.ts";
 import { formspreeEndpoint } from "./src/signup-config.ts";
 import {
   createWaitlistHandler,
@@ -33,9 +34,16 @@ function waitlist(): Plugin {
 }
 
 export default defineConfig(({ mode }) => {
-  const { SITE_URL, VITE_FORMSPREE_ENDPOINT } = loadEnv(mode, process.cwd(), [
+  const {
+    SITE_URL,
+    VITE_FORMSPREE_ENDPOINT,
+    GOOGLE_SITE_VERIFICATION,
+    BING_SITE_VERIFICATION,
+  } = loadEnv(mode, process.cwd(), [
     "SITE_",
     "VITE_FORMSPREE_",
+    "GOOGLE_SITE_",
+    "BING_SITE_",
   ]);
   const endpoint = formspreeEndpoint(VITE_FORMSPREE_ENDPOINT);
   if (mode === "pages" && (!SITE_URL || !endpoint)) {
@@ -43,5 +51,15 @@ export default defineConfig(({ mode }) => {
       "A Pages build requires SITE_URL and a verified VITE_FORMSPREE_ENDPOINT. Public deployment is on hold until signup is connected.",
     );
   }
-  return { plugins: [react(), waitlist(), launchMetadata(SITE_URL)] };
+  return {
+    plugins: [
+      react(),
+      waitlist(),
+      launchMetadata(SITE_URL, {
+        google: GOOGLE_SITE_VERIFICATION,
+        bing: BING_SITE_VERIFICATION,
+      }),
+      prerender(mode),
+    ],
+  };
 });

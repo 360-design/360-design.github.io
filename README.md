@@ -39,6 +39,31 @@ The eight blank photos were created with the built-in image-generation tool. PNG
 
 Open Graph and Twitter metadata are present in the server-delivered HTML. The public site is `https://360-design.github.io`. The Pages workflow sets this as `SITE_URL`, and the Vite metadata plugin adds the canonical URL, `og:url`, and absolute share-image URLs during the build. Without this value, private previews use a relative image path and omit canonical URLs. See `.env.example`. Protocol fields follow the [Open Graph specification](https://ogp.me/).
 
+### Search crawling and indexing
+
+Both build commands render the actual React homepage into `dist/index.html` through `server/prerender.ts` and `src/entry-server.tsx`. Crawlers receive the collection names, story, links and signup form without executing JavaScript. The browser mounts the interactive app over this HTML using the existing saved-colourway behavior. Without JavaScript, the page shows the Black concept photos and the hosted form can still submit natively. Garment preview controls require JavaScript. Build-time rendering never loads the local waitlist handler.
+
+With `SITE_URL` set to the public HTTPS origin, `server/launch-metadata.ts` generates:
+
+- `robots.txt`, allowing crawlers and linking the sitemap.
+- `sitemap.xml`, listing only the canonical homepage. Section fragments and garment dialogs are not separate pages. No invented modification dates are included.
+- An indexing directive permitting search snippets and large image previews, plus canonical and sharing URLs.
+- `Organization` and `WebSite` JSON-LD with the existing social profiles. There are no product offers, prices, stock claims or invented reviews.
+
+Without `SITE_URL`, HTML receives `noindex, nofollow`, robots disallows crawling, and no sitemap or public structured data is generated. This is an indexing preference, not access control for private content. A build with `SITE_URL` is intended for publication; leave it empty for private previews.
+
+`public/indexnow-key.txt` is a public URL-ownership key, not an account secret. After a successful Pages deployment, the workflow submits the homepage to [IndexNow](https://www.indexnow.org/documentation), which notifies participating engines including Bing. A notification failure leaves the successful deployment intact and appears in its workflow step. IndexNow does not submit to Google, and acceptance does not guarantee indexing.
+
+Google and Bing account setup is separate from deploying the crawl files:
+
+1. In [Google Search Console](https://search.google.com/search-console), add the **URL-prefix** property `https://360-design.github.io/`. Choose HTML tag verification. Copy only the tag's `content` value into the GitHub repository Actions variable `GOOGLE_SITE_VERIFICATION`. The GitHub-owned `github.io` DNS zone is not needed for this method.
+2. Run the Pages workflow again, then click Verify in Search Console. Keep the variable configured after verification. Submit `https://360-design.github.io/sitemap.xml` in Sitemaps and use URL Inspection to request indexing of the homepage.
+3. In [Bing Webmaster Tools](https://www.bing.com/webmasters/), add the site and choose HTML meta tag verification. Set its `content` value as `BING_SITE_VERIFICATION`, redeploy and verify, then submit the same sitemap. Importing an already verified Search Console property is an alternative.
+
+The optional verification variables are public tokens and are emitted only when `SITE_URL` is configured. Local equivalents are documented in `.env.example`. No verification token can be generated on behalf of an account that has not been connected.
+
+Check the deployed homepage, `/robots.txt`, `/sitemap.xml` and `/indexnow-key.txt` return HTTP 200 after deployment. Use Search Console's live URL test to inspect Google's rendered page and [Schema Markup Validator](https://validator.schema.org/) for the JSON-LD. GitHub Pages supplies real 404 responses for missing pages; do not add an SPA fallback that returns the homepage at arbitrary URLs. Search engines decide whether and when to index; [Google's sitemap guidance](https://developers.google.com/search/docs/crawling-indexing/sitemaps/build-sitemap) describes submission as a hint, not a guarantee.
+
 Campaign photos have 640/672/832/1024px sources, collection cards have 384/640/1024px sources, and lookbook photos have 480/576/768/1024px sources. Browsers select a source for the rendered size and screen density; gallery zoom retains the full 1024px photo. All sources retain the same aspect ratio and SVG coordinate system. Unused references are archived under `design-ideas/references/`, and obsolete product WebPs under `design-ideas/retired-product-webps/`, outside the production public folder.
 
 Run `npm run assets:generate` to regenerate the launch graphics and smaller WebP sources. This optional asset-authoring command needs Python with `fontTools`, Node, ImageMagick, and installed npm dependencies. Normal development and production builds use the checked-in assets and do not need Python or ImageMagick.

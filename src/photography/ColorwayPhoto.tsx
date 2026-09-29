@@ -44,7 +44,13 @@ function PhotoSession({
   const notified = useRef(false);
   const other = mode === "Black" ? "White" : "Black";
   const shown =
-    status[mode] === "ready" ? mode : status[other] === "ready" ? other : null;
+    // Static HTML describes its default photo without waiting for browser
+    // decoding. The client still tracks actual loading and fallback readiness.
+    import.meta.env.SSR || status[mode] === "ready"
+      ? mode
+      : status[other] === "ready"
+        ? other
+        : null;
   const unavailable = colors.every((color) => status[color] === "failed");
 
   useEffect(() => {

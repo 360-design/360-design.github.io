@@ -8,6 +8,9 @@ on:
 permissions:
   contents: read
 
+env:
+  SITE_URL: https://360-design.github.io
+
 concurrency:
   group: github-pages
   cancel-in-progress: false
@@ -28,8 +31,9 @@ jobs:
       - run: npm test
       - run: npm run build:pages
         env:
-          SITE_URL: https://360-design.github.io
           VITE_FORMSPREE_ENDPOINT: ${{ vars.FORMSPREE_ENDPOINT }}
+          GOOGLE_SITE_VERIFICATION: ${{ vars.GOOGLE_SITE_VERIFICATION }}
+          BING_SITE_VERIFICATION: ${{ vars.BING_SITE_VERIFICATION }}
       - uses: actions/configure-pages@983d7736d9b0ae728b81ab479565c72886d7745b # v5
       - uses: actions/upload-pages-artifact@56afc609e74202658d3ffba0e8f6dda462b719fa # v3
         with:
@@ -48,3 +52,17 @@ jobs:
       - name: Deploy
         id: deployment
         uses: actions/deploy-pages@d6db90164ac5ed86f2b6aed7e0febac5b3c0c03e # v4
+      - uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+      - name: Notify IndexNow of the published homepage
+        # Search notification failure must not mark a successful deployment as failed.
+        continue-on-error: true
+        run: |
+          key="$(tr -d '\n' < public/indexnow-key.txt)"
+          payload="$(jq -n --arg site "$SITE_URL" --arg key "$key" '{
+            host: ($site | sub("^https://"; "")),
+            key: $key,
+            keyLocation: ($site + "/indexnow-key.txt"),
+            urlList: [($site + "/")]
+          }')"
+          curl --fail-with-body --retry 3 --retry-delay 10 --max-time 30 \
+            --json "$payload" https://api.indexnow.org/indexnow

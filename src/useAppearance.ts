@@ -4,7 +4,10 @@ import { appearanceReducer, createAppearance } from "./appearance";
 export function useAppearance() {
   const [appearance, dispatch] = useReducer(appearanceReducer, undefined, () =>
     createAppearance(
-      document.documentElement.dataset.mode === "White" ? "White" : "Black",
+      typeof document !== "undefined" &&
+        document.documentElement.dataset.mode === "White"
+        ? "White"
+        : "Black",
     ),
   );
 
